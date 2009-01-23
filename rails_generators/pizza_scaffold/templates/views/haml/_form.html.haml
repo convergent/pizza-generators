@@ -1,10 +1,9 @@
 - form_for @<%= singular_name %> do |f|
   = f.error_messages
-  <%- for attribute in attributes -%>
-  %p
-    = f.label :<%= attribute.name %>
-    %br
-    = f.<%= attribute.field_type %> :<%= attribute.name %>
-  <%- end -%>
-  %p
-    = f.submit "Submit"
+  - f.fieldset do
+    <%- for attribute in attributes -%>
+    - f.field :<%= attribute.name %>
+    <%- end -%>
+    - f.field do
+      %label &nbsp;
+      = f.submit t(:submit)

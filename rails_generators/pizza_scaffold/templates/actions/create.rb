@@ -1,9 +1,1 @@
-  def create
-    @<%= singular_name %> = <%= class_name %>.new(params[:<%= singular_name %>])
-    if @<%= singular_name %>.save
-      flash[:notice] = "Successfully created <%= name.humanize.downcase %>."
-      redirect_to <%= item_path('url') %>
-    else
-      render :action => 'new'
-    end
-  end
+  create.success.flash I18n.t("<%= plural_name %>.create.success", :model => <%= class_name %>.human_name)

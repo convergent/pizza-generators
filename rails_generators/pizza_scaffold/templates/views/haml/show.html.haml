@@ -1,20 +1,17 @@
-- title "<%= singular_name.titleize %>"
+- title t(:title, :model => <%= class_name %>.human_name)
 
-<%- for attribute in attributes -%>
-%p
-  %strong <%= attribute.column.human_name.titleize %>:
-  =h @<%= singular_name %>.<%= attribute.name %>
-<%- end -%>
+- definition_list_for @<%= singular_name %> do |dl|
+  <%- for attribute in attributes -%>
+  - dl.show_h :<%= attribute.name %>
+  <%- end -%>
 
-%p
+%ol.actions
   <%- if action? :edit -%>
-  = link_to "Edit", edit_<%= singular_name %>_path(@<%= singular_name %>)
-  |
+  %li.edit= link_to t(:edit), edit_<%= singular_name %>_path(@<%= singular_name %>)
   <%- end -%>
   <%- if action? :destroy -%>
-  = link_to "Destroy", @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
-  |
+  %li.destroy= link_to t(:destroy), <%= singular_name %>_path(@<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete
   <%- end -%>
   <%- if action? :index -%>
-  = link_to "View All", <%= plural_name %>_path
+  %li.index= link_to t(:index), <%= plural_name %>_path
   <%- end -%>

@@ -1,6 +1,4 @@
-  def destroy
-    @<%= singular_name %> = <%= class_name %>.find(params[:id])
-    @<%= singular_name %>.destroy
-    flash[:notice] = "Successfully destroyed <%= name.humanize.downcase %>."
-    redirect_to <%= plural_name %>_url
+  destroy do
+    success.flash I18n.t("<%= plural_name %>.destroy.success", :model => <%= class_name %>.human_name)
+    failure.flash I18n.t("<%= plural_name %>.destroy.failure", :model => <%= class_name %>.human_name)
   end

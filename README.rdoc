@@ -9,9 +9,28 @@ A collection of useful Rails generator scripts.
 
   gem install iain-pizza-generators
 
-You may need to uninstall the older version if it's installed.
+== Why Pizza?
 
-  gem uninstall ryanb-nifty-generators
+Here is what is Pizza compared to Nifty:
+
+==== Done
+
+* Haml is default for pizza_scaffold, use --erb to switch back to erb
+* definition_list_for (from http://github.com/iain/model_based_html)
+* table_for (from http://github.com/iain/model_based_html)
+* form_for (from http://github.com/iain/fieldset_helper)
+* ResourceController (from http://github.com/giraffesoft/resource_controller)
+* Rails i18n and supposes Mr. T (from http://github.com/iain/mr.-t)
+* WillPaginate (from http://github.com/mislav/will_paginate)
+* Validations for models automaticly entered
+
+==== Todo
+
+* AuthLogic (from http://github.com/binarylogic/authlogic)
+* Support for namespaced controllers
+* Use a FactoryGirl instead of fixtures
+* Cucumber stories for RESTful controller in scaffold
+
 
 
 == Usage

@@ -1,7 +1,8 @@
-- title "New <%= singular_name.titleize %>"
+- title t(:title, :model => <%= class_name %>.human_name)
 
 <%= render_form %>
 
 <%- if action? :index -%>
-%p= link_to "Back to List", <%= plural_name %>_path
-<%- end -%>
+%ol.actions
+  %li.cancel= link_to t(:cancel), <%= plural_name %>_path, :confirm => h(t(:confirm))
+  <%- end -%>
