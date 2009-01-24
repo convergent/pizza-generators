@@ -20,4 +20,22 @@ module LayoutHelper
     args = args.map { |arg| arg == :defaults ? arg : arg.to_s }
     content_for(:head) { javascript_include_tag(*args) }
   end
+
+  def tab(identifier)
+    @current_tab = identifier
+  end
+
+  def show_tab(identifier, link = "#", link_options = {}, list_options = {})
+    text = t(identifier, :scope => :tabs, :default => identifier.to_s.titleize)
+    list_options[:class] = :current if identifier == @current_tab
+    content_tag(:li, link_to(text, link, link_options), list_options)
+  end
+
+  def cancel_link
+    if session[:back]
+      link = link_to(t(:cancel), session[:back], :confirm => h(t(:confirm_cancel)))
+      content_tag(:small, link, :class => "cancel")
+    end
+  end
+
 end

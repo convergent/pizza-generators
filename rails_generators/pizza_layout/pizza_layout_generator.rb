@@ -8,7 +8,9 @@ class PizzaLayoutGenerator < Rails::Generator::Base
     record do |m|
       m.directory 'app/views/layouts'
       m.directory 'public/stylesheets'
+      m.directory 'public/images'
       m.directory 'app/helpers'
+      m.directory 'app/views/shared'
       
       if options[:erb]
         m.template "layout.html.erb", "app/views/layouts/#{file_name}.html.erb"
@@ -16,14 +18,16 @@ class PizzaLayoutGenerator < Rails::Generator::Base
       else
         m.directory 'public/stylesheets/sass'
         m.template "layout.html.haml",  "app/views/layouts/#{file_name}.html.haml"
+        m.template "_menu.html.haml",   "app/views/shared/_menu.html.haml"
         m.file     "application.sass",  "public/stylesheets/sass/application.sass"
         m.file     "reset.sass",        "public/stylesheets/sass/reset.sass"
         m.file     "layout.sass",       "public/stylesheets/sass/layout.sass"
         m.file     "forms.sass",        "public/stylesheets/sass/forms.sass"
         m.file     "tables.sass",       "public/stylesheets/sass/tables.sass"
+        m.file "definition_lists.sass", "public/stylesheets/sass/definition_lists.sass"
       end
-      m.file     "required.png",      "public/images/required.png"
-      m.file "helper.rb", "app/helpers/layout_helper.rb"
+      m.file "required.png", "public/images/required.png"
+      m.file "helper.rb",    "app/helpers/layout_helper.rb"
     end
   end
   

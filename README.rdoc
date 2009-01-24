@@ -23,13 +23,14 @@ Here is what is Pizza compared to Nifty:
 * Rails i18n and supposes Mr. T (from http://github.com/iain/mr.-t)
 * WillPaginate (from http://github.com/mislav/will_paginate)
 * Some validations for models automaticly entered and some belongs_to stuff too
+* reset.sass for layout will keep your view tidy
+* A main menu was added in app/views/shared/_menu.html.haml
+* Provides a cancel_link helper
 
 ==== Todo
 
-* Reset.sass
-* Override will_paginate so it supports i18n
-* Add some more style
-* AuthLogic (from http://github.com/binarylogic/authlogic)
+* Configure will_paginate so it supports i18n
+* AuthLogic usage with pizza_authentication (from http://github.com/binarylogic/authlogic)
 * Support for namespaced controllers
 * Use a FactoryGirl instead of fixtures
 * Cucumber stories for RESTful controller in scaffold
@@ -105,14 +106,24 @@ Make sure you have mocha installed and require it in your spec/test helper.
   # in test_helper.rb
   require 'mocha'
 
-Also, make sure you're using Rails 2.1 or greater.
+Also, make sure you're using Rails 2.2.2 or greater.
+
+<b>How to use the cancel_link?</b>
+
+Add this code to your ApplicationController:
+
+  before_filter :remember_back
+  private
+  def remember_back
+    session[:back] = request.referrer if request.get?
+  end
 
 
 == Development
 
 This project can be found on github at the following URL.
 
-http://github.com/iain/pizza-generators/
+http://github.com/iain/pizza-generators and http://github.com/ryanb/nifty-generators
 
 If you wish the generators behaved differently, please consider
 forking the project and modifying to your heart's content. (I did that! - Iain)
