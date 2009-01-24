@@ -88,7 +88,7 @@ class PizzaAuthenticationGenerator < Rails::Generator::Base
 protected
   
   def view_language
-    options[:haml] ? 'haml' : 'erb'
+    options[:erb] ? 'erb' : 'haml'
   end
   
   def test_framework
@@ -101,7 +101,7 @@ protected
     opt.on("--testunit", "Use test/unit for test files.") { options[:test_framework] = :testunit }
     opt.on("--rspec", "Use RSpec for test files.") { options[:test_framework] = :rspec }
     opt.on("--shoulda", "Use Shoulda for test files.") { options[:test_framework] = :shoulda }
-    opt.on("--haml", "Generate HAML views instead of ERB.") { |v| options[:haml] = true }
+    opt.on("--erb", "Generate ERB views instead of HAML.") { |v| options[:erb] = true }
   end
   
   def banner
