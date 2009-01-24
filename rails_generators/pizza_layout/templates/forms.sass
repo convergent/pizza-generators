@@ -1,0 +1,84 @@
+fieldset
+  :margin 5px
+  :padding 5px
+  :border-top 1px solid #666
+  :padding-top 10px
+  legend
+    :border 0 none
+    :padding 3px
+    :font
+      :weight bold
+  ol
+    :list-style-type none
+    :margin 0
+    :padding 0
+  li
+    :list-style-type none
+    :margin 0
+    :padding 5px
+    :line-height 20px
+    :clear left
+    strong.garbage_type
+      :float left
+      :width 270px
+      :font-weight normal
+      :overflow hidden
+      :white-space nowrap
+    label
+      :float left
+      :width 200px
+      :margin-right 16px
+      :position relative
+      abbr
+        :position absolute
+        :left 200px
+        :top 3px
+        :cursor help
+        :width 16px
+        :height 16px
+        :border 0 none
+        :background
+          :repeat no-repeat
+          :position top left
+          :image url('../images/required.png')
+        em
+          :visibility hidden
+          :display none
+
+  fieldset
+    :clear both
+    :margin 0
+    :padding 0
+    :margin-bottom -1.5em
+    :border 0 none
+    :background
+      :color transparent
+      :image none
+    legend
+      :clear both
+      :margin 0
+      :padding 0
+      :background
+        :color transparent
+      :color black
+      :font-weight normal
+      span
+        :margin 0
+        :padding 0
+    ol
+      :position relative
+      :top -1.5em
+      :margin 0 0 0 216px
+      :padding 0
+      li
+        :padding 5px 0
+        :margin 0
+    label
+      :float none
+      :width auto
+      :margin-right auto
+
+.fieldWithErrors
+  label
+    :color #990000
+    :cursor help

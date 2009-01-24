@@ -10,14 +10,19 @@ class PizzaLayoutGenerator < Rails::Generator::Base
       m.directory 'public/stylesheets'
       m.directory 'app/helpers'
       
-      if options[:haml]
-        m.directory 'public/stylesheets/sass'
-        m.template "layout.html.haml", "app/views/layouts/#{file_name}.html.haml"
-        m.file     "stylesheet.sass",  "public/stylesheets/sass/#{file_name}.sass"
-      else
+      if options[:erb]
         m.template "layout.html.erb", "app/views/layouts/#{file_name}.html.erb"
         m.file     "stylesheet.css",  "public/stylesheets/#{file_name}.css"
+      else
+        m.directory 'public/stylesheets/sass'
+        m.template "layout.html.haml",  "app/views/layouts/#{file_name}.html.haml"
+        m.file     "application.sass",  "public/stylesheets/sass/application.sass"
+        m.file     "reset.sass",        "public/stylesheets/sass/reset.sass"
+        m.file     "layout.sass",       "public/stylesheets/sass/layout.sass"
+        m.file     "forms.sass",        "public/stylesheets/sass/forms.sass"
+        m.file     "tables.sass",       "public/stylesheets/sass/tables.sass"
       end
+      m.file     "required.png",      "public/images/required.png"
       m.file "helper.rb", "app/helpers/layout_helper.rb"
     end
   end
@@ -31,7 +36,7 @@ class PizzaLayoutGenerator < Rails::Generator::Base
     def add_options!(opt)
       opt.separator ''
       opt.separator 'Options:'
-      opt.on("--haml", "Generate HAML for view, and SASS for stylesheet.") { |v| options[:haml] = v }
+      opt.on("--erb", "Generate ERB for view.") { |v| options[:erb] = v }
     end
 
     def banner

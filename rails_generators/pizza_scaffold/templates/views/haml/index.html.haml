@@ -5,9 +5,10 @@
     <%- for attribute in attributes -%>
     - t.th :<%= attribute.name %>
     <%- end -%>
-  - t.foot do
-    - t.tr do
-      - t.td will_paginate, :colspan => t.width
+  - unless will_paginate(@<%= plural_name %>).blank?
+    - t.foot do
+      - t.tr do
+        - t.td will_paginate(@<%= plural_name %>), :colspan => t.width
   - t.body do |<%= singular_name %>|
     - t.tr do
       <%- for attribute in attributes -%>

@@ -15,17 +15,20 @@ Here is what is Pizza compared to Nifty:
 
 ==== Done
 
-* Haml is default for pizza_scaffold, use --erb to switch back to erb
+* Haml is default for pizza_scaffold, use <tt>--erb</tt> to switch back to erb
 * definition_list_for (from http://github.com/iain/model_based_html)
 * table_for (from http://github.com/iain/model_based_html)
 * form_for (from http://github.com/iain/fieldset_helper)
 * ResourceController (from http://github.com/giraffesoft/resource_controller)
 * Rails i18n and supposes Mr. T (from http://github.com/iain/mr.-t)
 * WillPaginate (from http://github.com/mislav/will_paginate)
-* Validations for models automaticly entered
+* Some validations for models automaticly entered and some belongs_to stuff too
 
 ==== Todo
 
+* Reset.sass
+* Override will_paginate so it supports i18n
+* Add some more style
 * AuthLogic (from http://github.com/binarylogic/authlogic)
 * Support for namespaced controllers
 * Use a FactoryGirl instead of fixtures
