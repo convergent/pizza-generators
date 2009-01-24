@@ -26,6 +26,7 @@ Here is what is Pizza compared to Nifty:
 * reset.sass for layout will keep your view tidy
 * A main menu was added in app/views/shared/_menu.html.haml
 * Provides a cancel_link helper
+* Added WillPaginate.translate! to support i18n (see below)
 
 ==== Todo
 
@@ -119,18 +120,7 @@ Add this code to your ApplicationController:
 
 <b>Translating will_paginate</b>
 
-Add this line to an initializer:
-  
-  WillPaginate::ViewHelpers.pagination_options.merge! I18n.t(:pagination)
-
-When you support switching locales, you'll probably have this in ApplicationController:
-
-  before_filter :set_locale
-  private
-  def set_locale
-    I18n.locale = params[:locale]
-    WillPaginate::ViewHelpers.pagination_options.merge! I18n.t(:pagination)
-  end
+Pizza_layout adds an easy way to translate will_paginate. It will automatically be called when Rails loads. 
 
 Your translations should look something like this:
 
@@ -154,6 +144,15 @@ The initializer will use the properties from the default_locale. Any other langu
     pagination:
       previous_label: "&laquo; Vorige"
       next_label: "Volgende &raquo;"
+
+When you support switching locales, you need to call WillPaginate.translate! everytime you switch locales. This can be done by adding to your ApplicationController:
+
+  before_filter :set_locale
+  private
+  def set_locale
+    I18n.locale = params[:locale]
+    WillPaginate.translate!
+  end
 
 For more information, read mislav's code on github:
 http://github.com/mislav/will_paginate/blob/master/lib/will_paginate/view_helpers.rb
