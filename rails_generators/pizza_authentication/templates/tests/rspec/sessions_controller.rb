@@ -1,25 +1,45 @@
 require File.dirname(__FILE__) + '/../spec_helper'
- 
-describe <%= sessions_class_name %>Controller do
+require 'authlogic/testing/test_unit_helpers' # put this in spec/spec_helper.rb
+
+describe <%= user_session_plural_class_name %>Controller do
   fixtures :all
   integrate_views
-  
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
+
+  describe "new action" do
+
+    it "should render new template" do
+      get :new
+      response.should render_template(:new)
+    end
+
   end
-  
-  it "create action should render new template when authentication is invalid" do
-    <%= user_class_name %>.stubs(:authenticate).returns(nil)
-    post :create
-    response.should render_template(:new)
-    session['<%= user_singular_name %>_id'].should be_nil
+
+  describe "create action" do
+
+    it "should render new template when authentication is invalid" do
+      post :create, :<%= user_session_singular_name %> => { :login => "foo", :password => "wrong" }
+      response.should render_template(:new)
+      <%= user_session_class_name %>.find.should be_nil
+    end
+
+    it "should redirect when authentication is valid" do
+      post :create, :<%= user_session_singular_name %> => { :login => "foo", :password => "secret" }
+      response.should redirect_to(root_url)
+      <%= user_session_class_name %>.find.should_not be_nil
+      <%= user_session_class_name %>.find.user.should == <%= user_plural_name %>(:one)
+    end
+
   end
-  
-  it "create action should redirect when authentication is valid" do
-    <%= user_class_name %>.stubs(:authenticate).returns(<%= user_class_name %>.first)
-    post :create
-    response.should redirect_to(root_url)
-    session['<%= user_singular_name %>_id'].should == <%= user_class_name %>.first.id
+
+  describe "destroy action" do
+
+    it "should destroy user session" do
+      set_session_for <%= user_plural_name %>(:one)
+      delete :destroy
+      <%= user_session_class_name %>.find.should be_nil
+      response.should redirect_to(root_url)
+    end
+
   end
+
 end

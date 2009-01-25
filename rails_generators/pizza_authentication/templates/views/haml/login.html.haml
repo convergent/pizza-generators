@@ -1,15 +1,15 @@
-- title "Log in"
+- title t(:title)
 
-%p== Don't have an account? #{link_to "Sign up!", signup_path}
+- form_for @<%= user_session_singular_name %>, :url => object_path do |f|
+  = f.error_messages
+  - f.fieldset do
+    - f.field :login
+    - f.field do
+      = f.required :password
+      = f.password_field :password
+    - f.field do
+      %label &nbsp;
+      = f.submit t(:submit)
 
-- form_tag <%= sessions_underscore_name %>_path do
-  %p
-    = label_tag :login, "Username or Email Address"
-    %br
-    = text_field_tag :login, params[:login]
-  %p
-    = label_tag :password
-    %br
-    = password_field_tag :password
-  %p
-    = submit_tag "Log in"
+%ol.actions
+  %li.no_account= link_to t(:no_account), signup_path

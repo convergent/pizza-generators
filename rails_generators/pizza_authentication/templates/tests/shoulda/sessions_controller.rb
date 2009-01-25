@@ -1,26 +1,44 @@
 require 'test_helper'
+require 'authlogic/testing/test_unit_helpers' # put this in test/test_helper.rb
 
-class <%= sessions_class_name %>ControllerTest < ActionController::TestCase
+class <%= user_session_plural_class_name %>ControllerTest < ActionController::TestCase
+
   context "new action" do
+
     should "render new template" do
       get :new
       assert_template 'new'
     end
+
   end
-  
+
   context "create action" do
-    should "render new template when authentication is invalid" do
-      <%= user_class_name %>.stubs(:authenticate).returns(nil)
-      post :create
-      assert_template 'new'
-      assert_nil session['<%= user_singular_name %>_id']
-    end
-    
-    should "redirect when authentication is valid" do
-      <%= user_class_name %>.stubs(:authenticate).returns(<%= user_class_name %>.first)
-      post :create
+
+    should "create user session when succesful login" do
+      post :create, :<%= user_session_singular_name %> => { :login => "foo", :password => "secret" }
+      assert <%= user_session_singular_name %> = <%= user_session_class_name %>.find
+      assert_equal <%= user_plural_name %>(:foo), <%= user_session_singular_name %>.user
       assert_redirected_to root_url
-      assert_equal <%= user_class_name %>.first.id, session['<%= user_singular_name %>_id']
     end
+
+    should "render new template when failed login" do
+      post :create, :<%= user_session_singular_name %> => { :login => "foo", :password => "wrong" }
+      assert_template 'new'
+      assert_nil <%= user_session_class_name %>.find
+    end
+
   end
+
+  context "destroy action" do
+
+    should "destroy user session" do
+      set_session_for <%= user_plural_name %>(:foo)
+      assert <%= user_session_class_name %>.find 
+      delete :destroy
+      assert_nil <%= user_session_class_name %>.find
+      assert_redirected_to login_url
+    end 
+
+  end
+
 end

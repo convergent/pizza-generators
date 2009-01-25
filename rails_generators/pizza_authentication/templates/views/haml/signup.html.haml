@@ -1,24 +1,19 @@
-- title "Sign up"
+- title t(:title)
 
-%p== Already have an account? #{link_to "Log in", login_path}.
-
-- form_for @<%= user_singular_name %> do |f|
+- form_for @<%= user_singular_name %>, :url => collection_path do |f|
   = f.error_messages
-  %p
-    = f.label :username
-    %br
-    = f.text_field :username
-  %p
-    = f.label :email, "Email Address"
-    %br
-    = f.text_field :email
-  %p
-    = f.label :password
-    %br
-    = f.password_field :password
-  %p
-    = f.label :password_confirmation, "Confirm Password"
-    %br
-    = f.password_field :password_confirmation
-  %p
-    = f.submit "Sign up"
+  - f.fieldset do
+    - f.field :login
+    - f.field do
+      = f.required :password
+      = f.password_field :password
+    - f.field do
+      = f.required :password_confirmation
+      = f.password_field :password_confirmation
+    - f.field do
+      %label &nbsp;
+      = f.submit t(:submit)
+      = cancel_link
+
+%ol.actions
+  %li.login= link_to t(:login), login_path

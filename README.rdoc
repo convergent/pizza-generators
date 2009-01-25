@@ -27,15 +27,78 @@ Here is what is Pizza compared to Nifty:
 * A main menu was added in app/views/shared/_menu.html.haml
 * Provides a cancel_link helper
 * Added WillPaginate.translate! to support i18n (see below)
+* A cancel link for every form
+* AuthLogic usage with pizza_authentication (from http://github.com/binarylogic/authlogic)
 
 ==== Todo
 
-* AuthLogic usage with pizza_authentication (from http://github.com/binarylogic/authlogic)
-* Support for namespaced controllers
+* Add gem dependencies to pizza-generators
+* Fully utilize the power of resource_controller in views
+* Add an internet only stylesheet and iepngfix.htc to pizza_layout
+* Add message_block gem (from http://github.com/railsgarden/message_block)
 * Use a FactoryGirl instead of fixtures
 * Cucumber stories for RESTful controller in scaffold
+* Update ERB, Test::Unit and Shoulda all over the place
+* Do something with Rails shiny new feature: Templates
 
+== Setting up
 
+Before doing anything, add these lines to <tt>config/environment.rb</tt>
+
+  config.gem "haml"
+  config.gem "authlogic"
+  config.gem "giraffesoft-resource_controller", :lib => "resource_controller", :source => "http://gems.github.com"
+  config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
+
+Then run these commands:
+
+  sudo rake gems:install
+  rake gems:unpack
+  haml --rails .
+  ./script/generate rspec
+
+Install plugins:
+
+  ./script/plugin install git://github.com/iain/fieldset_helper.git
+  ./script/plugin install git://github.com/iain/mr.-t.git
+  ./script/plugin install git://github.com/iain/model_based_html.git
+  ./script/plugin install git://github.com/iain/i18n_label.git
+
+Configure rspec to use mocha, in <tt>spec/spec_helper.rb</tt>
+
+  config.mock_with :mocha
+
+Generate layout (required for all other generators):
+
+  ./script/generate pizza_layout 
+
+Add the layout helper to be included every where, in <tt>app/controllers/application.rb</tt>
+
+  helper :layout
+
+Enable the cancel_link helper by adding code described below.
+
+Generate authentication (optional):
+
+  ./script/generate pizza_authentication
+
+Edit <tt>config/routes.rb</tt> to singularize the user_session resource:
+
+  map.resource :user_session
+
+And add a root route:
+
+  map.root :login # for example
+
+Edit <tt>spec/spec_helper.rb</tt> for authentication testing:
+
+  require 'authlogic/testing/test_unit_helpers'
+
+Inspect the generated migration for creating the users table, to enable or disable any attributes that you do or don't want.
+
+Run <tt>rake db:migrate</tt>
+
+And see if the specs run: <tt>rake spec</tt>
 
 == Usage
 
@@ -62,6 +125,10 @@ Run the command with the <tt>--help</tt> option to learn more.
 
 
 == Troubleshooting
+
+<b>Namespaced controllers howto</b>
+
+Just scaffold a RescourceController. Move the controller and views to it's desired subfolders and add the namespace to the name of the class, e.g. Admin::PostsController. Configure your routes and you're done!
 
 <b>I get "undefined method 'title'" error.</b>
 

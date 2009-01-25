@@ -1,22 +1,24 @@
-class <%= sessions_class_name %>Controller < ApplicationController
-  def new
-  end
-  
-  def create
-    <%= user_singular_name %> = <%= user_class_name %>.authenticate(params[:login], params[:password])
-    if <%= user_singular_name %>
-      session[:<%= user_singular_name %>_id] = <%= user_singular_name %>.id
-      flash[:notice] = "Logged in successfully."
-      redirect_to root_url
-    else
-      flash.now[:error] = "Invalid login or password."
-      render :action => 'new'
+class <%= user_session_plural_class_name %>Controller < ResourceController::Singleton
+
+  actions :new, :create, :destroy
+
+  create do
+    success do
+      wants.html { redirect_to root_url }
+      flash { t(:success) }
     end
+    failure.flash_now { t(:failure) }
   end
-  
-  def destroy
-    session[:<%= user_singular_name %>_id] = nil
-    flash[:notice] = "You have been logged out."
-    redirect_to root_url
+
+  destroy.success do
+    flash { t(:success) }
+    wants.html { redirect_to root_url }
   end
+
+  private
+
+  def object
+    @object ||= <%= user_session_class_name %>.find
+  end
+
 end

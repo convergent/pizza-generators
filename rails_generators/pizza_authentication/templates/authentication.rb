@@ -3,7 +3,7 @@
 # common example you might add to your application layout file.
 # 
 #   <%% if logged_in? %>
-#     Welcome <%%= current_user.username %>! Not you?
+#     Welcome <%%= current_<%= user_singular_name %>.login %>! Not you?
 #     <%%= link_to "Log out", logout_path %>
 #   <%% else %>
 #     <%%= link_to "Sign up", signup_path %> or
@@ -15,12 +15,19 @@
 # 
 #   before_filter :login_required, :except => [:index, :show]
 module Authentication
+
   def self.included(controller)
-    controller.send :helper_method, :current_<%= user_singular_name %>, :logged_in?
+    controller.send :helper_method, :current_<%= user_singular_name %>, :logged_in?, :current_<%= user_session_singular_name %>
   end
   
   def current_<%= user_singular_name %>
-    @current_<%= user_singular_name %> ||= <%= user_class_name %>.find(session[:<%= user_singular_name %>_id]) if session[:<%= user_singular_name %>_id]
+    return @current_<%= user_singular_name %> if defined?(@current_<%= user_singular_name %>)
+    @current_<%= user_singular_name %> = current_<%= user_session_singular_name %> && current_<%= user_session_singular_name %>.user
+  end
+
+  def current_<%= user_session_singular_name %>
+    return @current_<%= user_session_singular_name %> if defined?(@current_<%= user_session_singular_name %>)
+    @current_<%= user_session_singular_name %> = <%= user_session_class_name %>.find
   end
   
   def logged_in?
@@ -29,7 +36,7 @@ module Authentication
   
   def login_required
     unless logged_in?
-      flash[:error] = "You must first log in or sign up before accessing this page."
+      flash[:error] = I18n.t("<%= user_session_plural_name %>.login_required")
       redirect_to login_url
     end
   end

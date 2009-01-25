@@ -1,16 +1,13 @@
-class <%= user_plural_class_name %>Controller < ApplicationController
-  def new
-    @<%= user_singular_name %> = <%= user_class_name %>.new
-  end
-  
-  def create
-    @<%= user_singular_name %> = <%= user_class_name %>.new(params[:<%= user_singular_name %>])
-    if @<%= user_singular_name %>.save
-      session[:<%= user_singular_name %>_id] = @<%= user_singular_name %>.id
-      flash[:notice] = "Thank you for signing up! You are now logged in."
-      redirect_to root_url
-    else
-      render :action => 'new'
+class <%= user_plural_class_name %>Controller < ResourceController::Base
+
+  actions :new, :create
+
+  create do
+    success do
+      flash { t(:success) }
+      wants.html { redirect_to root_url }
     end
+    failure.flash_now { t(:failure) }
   end
+
 end
