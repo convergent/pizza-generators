@@ -29,17 +29,17 @@ Here is what is Pizza compared to Nifty:
 * Added WillPaginate.translate! to support i18n (see below)
 * A cancel link for every form
 * AuthLogic usage with pizza_authentication (from http://github.com/binarylogic/authlogic)
+* Added gem dependencies to pizza-generators (my first try, so hopefully that works)
 
 ==== Todo
 
-* Add gem dependencies to pizza-generators
-* Fully utilize the power of resource_controller in views
 * Add an internet only stylesheet and iepngfix.htc to pizza_layout
 * Add message_block gem (from http://github.com/railsgarden/message_block)
 * Use a FactoryGirl instead of fixtures
 * Cucumber stories for RESTful controller in scaffold
 * Update ERB, Test::Unit and Shoulda all over the place
 * Do something with Rails shiny new feature: Templates
+* Make the required plugins gems so they can be a gem dependency (not sure though)
 
 == Setting up
 
@@ -49,10 +49,13 @@ Before doing anything, add these lines to <tt>config/environment.rb</tt>
   config.gem "authlogic"
   config.gem "giraffesoft-resource_controller", :lib => "resource_controller", :source => "http://gems.github.com"
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
+  config.gem "rspec"
+  config.gem "rspec-rails"
+  config.gem "mocha"
 
 Then run these commands:
 
-  sudo rake gems:install
+  sudo rake gems:install # this should have already been done via the gem dependencies
   rake gems:unpack
   haml --rails .
   ./script/generate rspec
