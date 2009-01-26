@@ -1,5 +1,8 @@
 class <%= user_session_plural_class_name %>Controller < ResourceController::Singleton
 
+  before_filter :login_required,  :only => [ :destroy ]
+  before_filter :logout_required, :except => [ :destroy ]
+
   actions :new, :create, :destroy
 
   create do
