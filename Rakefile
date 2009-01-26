@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('pizza-generators', '0.1.0') do |p|
+Echoe.new('pizza-generators', '0.1.1') do |p|
   p.project        = "pizzagenerators"
   p.description    = "A collection of useful generator scripts for Rails."
   p.url            = "http://github.com/iain/pizza-generators"
