@@ -5,6 +5,7 @@
     <%- for attribute in attributes -%>
     - t.th :<%= attribute.name %>
     <%- end -%>
+    - t.th t("actions"), :colspan => <%= table_link_count %>
   - unless will_paginate(@<%= plural_name %>).blank?
     - t.foot do
       - t.tr do
@@ -15,16 +16,16 @@
       - t.td_h :<%= attribute.name %>
       <%- end -%>
       <%- if action? :show -%>
-      - t.td link_to(t(:show), <%= singular_name %>_path(<%= singular_name %>))
+      - t.td link_to(t(:show), object_path(<%= singular_name %>))
       <%- end -%>
       <%- if action? :edit -%>
-      - t.td link_to(t(:edit), edit_<%= singular_name %>_path(<%= singular_name %>))
+      - t.td link_to(t(:edit), edit_object_path(<%= singular_name %>))
       <%- end -%>
       <%- if action? :destroy -%>
-      - t.td link_to(t(:destroy), <%= singular_name %>_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete)
+      - t.td link_to(t(:destroy), object_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete)
       <%- end -%>
 
 <%- if actions? :new -%>
 %ol.actions
-  %li.new= link_to t(:new, :model => <%= class_name %>.human_name), new_<%= singular_name %>_path
+  %li.new= link_to t(:new), new_object_path
   <%- end -%>

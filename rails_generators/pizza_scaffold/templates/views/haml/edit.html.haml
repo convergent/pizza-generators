@@ -1,13 +1,13 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
-<%= render_form %>
+<%= render_form :object_path %>
 
 <%- if actions? :show, :index -%>
 %ol.actions
   <%- if action? :show -%>
-  %li.cancel= link_to t(:cancel), <%= singular_name %>_path(@<%= singular_name %>), :confirm => h(t(:confirm))
+  %li.show= link_to t(:show), object_path
   <%- end -%>
   <%- if action? :index -%>
-  %li.index= link_to t(:index), <%= plural_name %>_path
+  %li.index= link_to t(:index), collection_path
   <%- end -%>
 <%- end -%>

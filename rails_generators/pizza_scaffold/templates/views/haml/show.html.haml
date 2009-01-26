@@ -7,11 +7,11 @@
 
 %ol.actions
   <%- if action? :edit -%>
-  %li.edit= link_to t(:edit), edit_<%= singular_name %>_path(@<%= singular_name %>)
+  %li.edit= link_to t(:edit), edit_object_path
   <%- end -%>
   <%- if action? :destroy -%>
-  %li.destroy= link_to t(:destroy), <%= singular_name %>_path(@<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete
+  %li.destroy= link_to t(:destroy), object_path, :confirm => h(t(:confirm)), :method => :delete
   <%- end -%>
   <%- if action? :index -%>
-  %li.index= link_to t(:index), <%= plural_name %>_path
+  %li.index= link_to t(:index), collection_path
   <%- end -%>

@@ -1,4 +1,4 @@
-- form_for @<%= singular_name %> do |f|
+- form_for @<%= singular_name %>, :url => form_url do |f|
   = f.error_messages
   - f.fieldset do
     <%- for attribute in attributes -%>
@@ -7,3 +7,4 @@
     - f.field do
       %label &nbsp;
       = f.submit t(:submit)
+      = cancel_link

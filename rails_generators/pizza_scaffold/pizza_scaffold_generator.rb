@@ -100,6 +100,10 @@ class PizzaScaffoldGenerator < Rails::Generator::Base
   def all_actions
     %w[index show new create edit update destroy]
   end
+
+  def not_used_actions
+    all_actions - controller_actions.map(&:to_s)
+  end
   
   def action?(name)
     controller_actions.include? name.to_s
@@ -124,6 +128,10 @@ class PizzaScaffoldGenerator < Rails::Generator::Base
   def plural_class_name
     plural_name.camelize
   end
+
+  def table_link_count
+    (controller_actions - %w[new index update create]).size
+  end
   
   def controller_methods(dir_name)
     controller_actions.map do |action|
@@ -131,14 +139,15 @@ class PizzaScaffoldGenerator < Rails::Generator::Base
     end.join("  \n").strip
   end
   
-  def render_form
+  def render_form(url)
     if form_partial?
       if options[:erb]
         "<%= render :partial => 'form' %>"
       else
-        "= render :partial => 'form'"
+        "= render :partial => 'form', :locals => { :form_url => #{url} }"
       end
     else
+      (options[:erb] ? "" : "- form_url = #{url}\n") +
       read_template("views/#{view_language}/_form.html.#{view_language}")
     end
   end

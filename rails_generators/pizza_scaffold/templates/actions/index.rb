@@ -1,3 +1,3 @@
   def collection
-    @<%= plural_name %> ||= <%= class_name %>.paginate(:page => params[:page], :per_page => params[:per_page])
+    @collection ||= end_of_association_chain.paginate(:page => params[:page])
   end

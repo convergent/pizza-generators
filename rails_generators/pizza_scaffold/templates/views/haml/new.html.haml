@@ -1,8 +1,8 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
-<%= render_form %>
+<%= render_form :collection_url %>
 
 <%- if action? :index -%>
 %ol.actions
-  %li.cancel= link_to t(:cancel), <%= plural_name %>_path, :confirm => h(t(:confirm))
+  %li.index= link_to t(:index), collection_path
   <%- end -%>
