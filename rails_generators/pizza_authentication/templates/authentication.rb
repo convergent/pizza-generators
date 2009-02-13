@@ -18,6 +18,8 @@ module Authentication
 
   def self.included(controller)
     controller.send :helper_method, :current_<%= user_singular_name %>, :logged_in?, :current_<%= user_session_singular_name %>
+    controller.send :before_filter, :activate_authlogic
+    controller.send :before_filter, :load_<%= user_session_singular_name %>
   end
 
   def load_<%= user_session_singular_name %>
@@ -50,5 +52,18 @@ module Authentication
       redirect_to(request.referrer || root_url)
     end
   end
+
+  def activate_authlogic
+    Authlogic::Session::Base.controller = Authlogic::ControllerAdapters::RailsAdapter.new(self)
+  end
+
+  # Uncomment this method when you have an admin and want to filter for it.
+  # def admin_required
+  #   return login_required unless logged_in?
+  #   unless current_<%= user_singular_name %>.admin?
+  #     flash[:error] = I18n.t("<%= user_session_plural_name %>.admin_required")
+  #     redirect_to(request.referrer || root_url)
+  #   end
+  # end
 
 end
