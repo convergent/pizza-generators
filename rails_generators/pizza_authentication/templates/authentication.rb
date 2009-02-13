@@ -19,17 +19,20 @@ module Authentication
   def self.included(controller)
     controller.send :helper_method, :current_<%= user_singular_name %>, :logged_in?, :current_<%= user_session_singular_name %>
   end
-  
-  def current_<%= user_singular_name %>
-    return @current_<%= user_singular_name %> if defined?(@current_<%= user_singular_name %>)
-    @current_<%= user_singular_name %> = current_<%= user_session_singular_name %> && current_<%= user_session_singular_name %>.user
+
+  def load_<%= user_session_singular_name %>
+    @<%= user_session_singular_name %> = <%= user_session_class_name %>.find
+    @current_<%= user_singular_name %> = @<%= user_session_singular_name %> && @<%= user_session_singular_name %>.user
   end
 
-  def current_<%= user_session_singular_name %>
-    return @current_<%= user_session_singular_name %> if defined?(@current_<%= user_session_singular_name %>)
-    @current_<%= user_session_singular_name %> = <%= user_session_class_name %>.find
+  def <%= user_session_singular_name %>
+    @<%= user_session_singular_name %>
   end
   
+  def current_<%= user_singular_name %>
+    @current_<%= user_singular_name %>
+  end
+
   def logged_in?
     current_<%= user_singular_name %>
   end
@@ -40,4 +43,12 @@ module Authentication
       redirect_to login_url
     end
   end
+
+  def logout_required
+    if logged_in?
+      flash[:error] = I18n.t("<%= user_session_plural_name %>.logout_required")
+      redirect_to(request.referrer || root_url)
+    end
+  end
+
 end

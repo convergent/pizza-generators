@@ -38,7 +38,9 @@ class PizzaAuthenticationGenerator < Rails::Generator::Base
       m.route_name :logout, 'logout', :controller => user_session_plural_name, :action => 'destroy'
       m.route_name :signup, 'signup', :controller => user_plural_name, :action => 'new'
       
-      m.insert_into 'app/controllers/application.rb', 'include Authentication'
+      m.insert_into 'app/controllers/application.rb', "filter_parameter_logging :password, :password_confirmation"
+      m.insert_into 'app/controllers/application.rb', "before_filter :load_#{user_session_singular_name}"
+      m.insert_into 'app/controllers/application.rb', 'unloadable; include Authentication'
       
       if test_framework == :rspec
         m.directory "spec"
