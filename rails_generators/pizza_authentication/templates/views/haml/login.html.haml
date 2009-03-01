@@ -1,6 +1,6 @@
 - title t(:title)
 
-- form_for @<%= user_session_singular_name %>, :url => object_path do |f|
+- form_for @<%= user_session_singular_name %>, :url => <%= user_session_singular_name %>_path do |f|
   = f.error_messages
   - f.fieldset do
     - f.required_field :login

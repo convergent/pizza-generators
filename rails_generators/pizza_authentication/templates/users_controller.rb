@@ -1,13 +1,38 @@
-class <%= user_plural_class_name %>Controller < ResourceController::Base
+class <%= user_plural_class_name %>Controller < ApplicationController
 
-  actions :new, :create
+  before_filter :logout_required, :only => [ :new, :create ]
+  before_filter :login_required,  :only => [ :show, :edit, :update ]
 
-  create do
-    success do
-      flash { t(:success) }
-      wants.html { redirect_to root_url }
+  def new
+    @<%= user_singular_name %> = <%= user_class_name %>.new
+  end
+
+  def create
+    @<%= user_singular_name %> = <%= user_class_name %>.new(params[:<%= user_singular_name %>])
+    if @<%= user_singular_name %>.save
+      flash[:notice] = t(:success)
+      redirect_to <%= user_singular_name %>_url
+    else
+      render :action => 'new'
     end
-    failure.flash_now { t(:failure) }
+  end
+
+  def show
+    @<%= user_singular_name %> = current_<%= user_singular_name %>
+  end
+
+  def edit
+    @<%= user_singular_name %> = current_<%= user_singular_name %>
+  end
+
+  def update
+    @<%= user_singular_name %> = current_<%= user_singular_name %>
+    if @<%= user_singular_name %>.update_attributes(params[:<%= user_singular_name %>])
+      flash[:notice] = t(:success)
+      redirect_to <%= user_singular_name %>_url
+    else
+      render :action => 'new'
+    end
   end
 
 end

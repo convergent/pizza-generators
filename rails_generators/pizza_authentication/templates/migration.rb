@@ -4,11 +4,12 @@ class Create<%= user_plural_class_name %> < ActiveRecord::Migration
 
       # Required database fields
       t.string    :login,                 :null => false
+      t.string    :email,                 :null => false
       t.string    :crypted_password,      :null => false
       t.string    :password_salt,         :null => false
       t.string    :persistence_token,     :null => false
 
-      # Optional tokens, see Authlogic README for more details.
+      # Optional tokens
       # t.string    :single_access_token,   :null => false # or: rss_feed_token
       # t.string    :perishable_token,      :null => false # or: pw_reset_token, activation_token
 
@@ -20,14 +21,23 @@ class Create<%= user_plural_class_name %> < ActiveRecord::Migration
       t.string    :current_login_ip
       t.string    :last_login_ip
 
-      # For activating an account, optional
-      t.boolean   :active,                :null => false, :default => true
+      # Magic states
+      # t.boolean   :active,                :null => false, :default => true
+      # t.boolean   :approved,              :null => false, :default => false
+      # t.boolean   :confirmed,             :null => false, :default => false
 
       t.timestamps
     end
+
+    add_index :<%= user_plural_name %>, :login, :unique => true
+    add_index :<%= user_plural_name %>, :email, :unique => true
+    add_index :<%= user_plural_name %>, :persistence_token
   end
   
   def self.down
-    drop_table :<%= user_plural_name %>
+    remove_index :<%= user_plural_name %>, :login
+    remove_index :<%= user_plural_name %>, :email
+    remove_index :<%= user_plural_name %>, :persistence_token
+    drop_table   :<%= user_plural_name %>
   end
 end

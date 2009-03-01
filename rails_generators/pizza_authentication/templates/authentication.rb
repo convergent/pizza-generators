@@ -24,21 +24,21 @@ module Authentication
 
   def load_<%= user_session_singular_name %>
     @<%= user_session_singular_name %> = <%= user_session_class_name %>.find
-    @current_<%= user_singular_name %> = @<%= user_session_singular_name %> && @<%= user_session_singular_name %>.user
+    @current_<%= user_singular_name %> = @<%= user_session_singular_name %> && @<%= user_session_singular_name %>.<%= user_singular_name %>
   end
 
-  def <%= user_session_singular_name %>
+  def current_<%= user_session_singular_name %>
     @<%= user_session_singular_name %>
   end
-  
+
   def current_<%= user_singular_name %>
     @current_<%= user_singular_name %>
   end
 
   def logged_in?
-    current_<%= user_singular_name %>
+    !!current_<%= user_singular_name %>
   end
-  
+
   def login_required
     unless logged_in?
       flash[:error] = I18n.t("<%= user_session_plural_name %>.login_required")
@@ -49,7 +49,7 @@ module Authentication
   def logout_required
     if logged_in?
       flash[:error] = I18n.t("<%= user_session_plural_name %>.logout_required")
-      redirect_to(request.referrer || root_url)
+      redirect_to root_url
     end
   end
 
@@ -62,7 +62,7 @@ module Authentication
   #   return login_required unless logged_in?
   #   unless current_<%= user_singular_name %>.admin?
   #     flash[:error] = I18n.t("<%= user_session_plural_name %>.admin_required")
-  #     redirect_to(request.referrer || root_url)
+  #     redirect_to root_url
   #   end
   # end
 

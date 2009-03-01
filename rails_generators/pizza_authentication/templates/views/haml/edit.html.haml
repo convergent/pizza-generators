@@ -1,20 +1,21 @@
 - title t(:title)
 
-- form_for @<%= user_singular_name %>, :url => <%= user_session_singular_name %>_path do |f|
+- form_for @<%= user_singular_name %> do |f|
   = f.error_messages
   - f.fieldset do
-    - f.required_field :login
     - f.required_field :email
     - f.field do
-      = f.required :password
+      = f.required :old_password
+      = f.password_field :old_password
+    - f.field do
+      = f.label :password
       = f.password_field :password
     - f.field do
-      = f.required :password_confirmation
+      = f.label :password_confirmation
       = f.password_field :password_confirmation
     - f.field do
       %label &nbsp;
       = f.submit t(:submit)
-      = cancel_link
 
 %ol.actions
-  %li.login= link_to t(:login), login_path
+  %li.show= link_to t(:show), <%= user_singular_name %>_path

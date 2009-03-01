@@ -1,0 +1,15 @@
+- title t(:title)
+
+- definition_list_for @<%= user_singular_name %> do |dl|
+  - dl.show_h :login
+  - dl.show_h :email
+  - dl.show_h :login_count
+  - dl.show_h :last_request_at
+  - dl.show_h :current_logint_at
+  - dl.show_h :last_login_at
+  - dl.show_h :current_login_ip
+  - dl.show_h :last_login_ip
+
+%ol.actions
+  %li.edit= link_to t(:edit), edit_<%= user_singular_name %>_path
+  %li.logout= link_to t(:logout), logout_path
