@@ -11,7 +11,7 @@ class <%= user_plural_class_name %>Controller < ApplicationController
     @<%= user_singular_name %> = <%= user_class_name %>.new(params[:<%= user_singular_name %>])
     if @<%= user_singular_name %>.save
       flash[:notice] = t(:success)
-      redirect_to <%= user_singular_name %>_url
+      redirect_to root_url
     else
       render :action => 'new'
     end
