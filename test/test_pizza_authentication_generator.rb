@@ -18,13 +18,14 @@ class TestPizzaAuthenticationGenerator < Test::Unit::TestCase
   #   bare_teardown - place this in teardown method to destroy the TMP_ROOT or APP_ROOT folder after each test
   context "" do # empty context so we can use setup block
     setup do
+      app_controller = RAILS_GEM_VERSION >= "2.3" ? "application_controller.rb" : 'application.rb'
       Dir.mkdir("#{RAILS_ROOT}/config") unless File.exists?("#{RAILS_ROOT}/config")
       File.open("#{RAILS_ROOT}/config/routes.rb", 'w') do |f|
         f.puts "ActionController::Routing::Routes.draw do |map|\n\nend"
       end
       Dir.mkdir("#{RAILS_ROOT}/app") unless File.exists?("#{RAILS_ROOT}/app")
       Dir.mkdir("#{RAILS_ROOT}/app/controllers") unless File.exists?("#{RAILS_ROOT}/app/controllers")
-      File.open("#{RAILS_ROOT}/app/controllers/application.rb", 'w') do |f|
+      File.open("#{RAILS_ROOT}/app/controllers/#{app_controller}", 'w') do |f|
         f.puts "class Application < ActionController::Base\n\nend"
       end
     end
@@ -64,7 +65,7 @@ class TestPizzaAuthenticationGenerator < Test::Unit::TestCase
       end
     
       should "include Authentication" do
-        assert_generated_file "app/controllers/application.rb" do |body|
+        assert_generated_file "app/controllers/#{app_controller}" do |body|
           assert_match "include Authentication", body
         end
       end

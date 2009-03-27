@@ -75,7 +75,9 @@ Generate layout (required for all other generators):
 
   ./script/generate pizza_layout 
 
-Add the layout helper to be included every where, in <tt>app/controllers/application.rb</tt>
+Add the layout helper to be included every where, in <tt>app/controllers/application_controller.rb</tt>
+(or <tt>app/controllers/application.rb</tt> if you are using a rails version < 2.3)
+
 
   helper :layout
 
