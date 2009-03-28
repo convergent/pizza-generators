@@ -182,13 +182,7 @@ Also, make sure you're using Rails 2.2.2 or greater.
 
 <b>How to use the cancel_link?</b>
 
-Add this code to your ApplicationController:
-
-  before_filter :remember_back
-  private
-  def remember_back
-    session[:back] = request.referrer if request.get?
-  end
+just use cancel_link method of layout_helper
 
 <b>Translating will_paginate</b>
 

@@ -32,10 +32,7 @@ module LayoutHelper
   end
 
   def cancel_link
-    if session[:back]
-      link = link_to(t(:cancel), session[:back], :confirm => h(t(:confirm_cancel)))
-      content_tag(:small, link, :class => "cancel")
-    end
+    link = link_to(t(:cancel), :back)
+    content_tag(:small, link, :class => "cancel")
   end
-
 end
