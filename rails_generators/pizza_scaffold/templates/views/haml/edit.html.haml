@@ -9,5 +9,5 @@
 
 <%- if action? :destroy -%>
 %ol.actions
-  %li.destroy= link_to(t(:destroy), object_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete)
+  %li.destroy= link_to(t(:destroy), object_path, :confirm => h(t(:confirm)), :method => :delete)
 <%- end -%>
