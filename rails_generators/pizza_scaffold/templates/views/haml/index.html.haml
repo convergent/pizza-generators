@@ -1,5 +1,10 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
+<%- if actions? :new -%>
+%ol.actions
+  %li.new= link_to t(:new), new_object_path
+<%- end -%>
+
 - table_for @<%= plural_name %> do |t|
   - t.head do
     <%- for attribute in attributes -%>
@@ -18,14 +23,5 @@
       <%- if action? :show -%>
       - t.td link_to(t(:show), object_path(<%= singular_name %>))
       <%- end -%>
-      <%- if action? :edit -%>
-      - t.td link_to(t(:edit), edit_object_path(<%= singular_name %>))
-      <%- end -%>
-      <%- if action? :destroy -%>
-      - t.td link_to(t(:destroy), object_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete)
-      <%- end -%>
 
-<%- if actions? :new -%>
-%ol.actions
-  %li.new= link_to t(:new), new_object_path
-  <%- end -%>
+

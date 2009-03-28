@@ -1,5 +1,9 @@
 <%% title "<%= plural_name.titleize %>" %>
 
+<%- if action? :new -%>
+<p><%%= link_to "New <%= singular_name.titleize %>", new_<%= singular_name %>_path %></p>
+<%- end -%>
+
 <table>
   <tr>
   <%- for attribute in attributes -%>
@@ -11,19 +15,11 @@
     <%- for attribute in attributes -%>
       <td><%%=h <%= singular_name %>.<%= attribute.name %> %></td>
     <%- end -%>
-    <%- if action? :show -%>
-      <td><%%= link_to "Show", <%= singular_name %> %></td>
-    <%- end -%>
     <%- if action? :edit -%>
       <td><%%= link_to "Edit", edit_<%= singular_name %>_path(<%= singular_name %>) %></td>
-    <%- end -%>
-    <%- if action? :destroy -%>
-      <td><%%= link_to "Destroy", <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete %></td>
     <%- end -%>
     </tr>
   <%% end %>
 </table>
 
-<%- if action? :new -%>
-<p><%%= link_to "New <%= singular_name.titleize %>", new_<%= singular_name %>_path %></p>
-<%- end -%>
+
