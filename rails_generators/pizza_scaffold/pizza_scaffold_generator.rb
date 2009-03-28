@@ -130,7 +130,8 @@ class PizzaScaffoldGenerator < Rails::Generator::Base
   end
 
   def table_link_count
-    (controller_actions - %w[new index update create]).size
+    #(controller_actions - %w[new index update create]).size
+    1
   end
   
   def controller_methods(dir_name)

@@ -10,7 +10,7 @@
     <%- for attribute in attributes -%>
     - t.th :<%= attribute.name %>
     <%- end -%>
-    - t.th t("actions"), :colspan => <%= table_link_count %>
+    - t.th t("action"), :colspan => <%= table_link_count %>
   - unless will_paginate(@<%= plural_name %>).blank?
     - t.foot do
       - t.tr do
