@@ -1,13 +1,13 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
+<%- if actions? :show -%>
+%ol.actions
+  %li.show= link_to t(:show), object_path
+<%- end -%>
+
 <%= render_form :object_path %>
 
-<%- if actions? :show, :index -%>
+<%- if action? :destroy -%>
 %ol.actions
-  <%- if action? :show -%>
-  %li.show= link_to t(:show), object_path
-  <%- end -%>
-  <%- if action? :index -%>
-  %li.index= link_to t(:index), collection_path
-  <%- end -%>
+  %li.destroy= link_to(t(:destroy), object_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete)
 <%- end -%>

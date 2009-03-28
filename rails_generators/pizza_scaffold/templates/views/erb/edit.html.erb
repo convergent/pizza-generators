@@ -1,14 +1,15 @@
 <%% title "Edit <%= singular_name.titleize %>" %>
 
+<%- if actions? :show -%>
+<p>
+  <%%= link_to "Show", @<%= singular_name %> %> |
+</p>
+<%- end -%>
+
 <%= render_form %>
 
-<%- if actions? :show, :index -%>
+<%- if actions? :delete -%>
 <p>
-<%- if action? :show -%>
-  <%%= link_to "Show", @<%= singular_name %> %> |
-<%- end -%>
-<%- if action? :index -%>
-  <%%= link_to "View All", <%= plural_name %>_path %>
-<%- end -%>
+  <%%= link_to(t(:destroy), object_path(<%= singular_name %>), :confirm => h(t(:confirm)), :method => :delete) %> |
 </p>
 <%- end -%>
