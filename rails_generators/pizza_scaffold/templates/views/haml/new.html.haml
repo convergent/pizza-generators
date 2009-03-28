@@ -1,8 +1,9 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
-<%= render_form :collection_url %>
-
 <%- if action? :index -%>
 %ol.actions
   %li.index= link_to t(:index), collection_path
-  <%- end -%>
+<%- end -%>
+
+<%= render_form :collection_url %>
+
