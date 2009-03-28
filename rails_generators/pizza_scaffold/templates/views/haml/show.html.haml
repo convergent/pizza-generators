@@ -1,17 +1,16 @@
 - title t(:title, :model => <%= class_name %>.human_name)
 
+<%- if action? :index -%>
+%ol.actions
+  %li.index= link_to t(:index), collection_path
+<%- end -%>
+
 - definition_list_for @<%= singular_name %> do |dl|
   <%- for attribute in attributes -%>
   - dl.show_h :<%= attribute.name %>
   <%- end -%>
 
+<%- if action? :edit -%>
 %ol.actions
-  <%- if action? :edit -%>
   %li.edit= link_to t(:edit), edit_object_path
-  <%- end -%>
-  <%- if action? :destroy -%>
-  %li.destroy= link_to t(:destroy), object_path, :confirm => h(t(:confirm)), :method => :delete
-  <%- end -%>
-  <%- if action? :index -%>
-  %li.index= link_to t(:index), collection_path
-  <%- end -%>
+<%- end -%>

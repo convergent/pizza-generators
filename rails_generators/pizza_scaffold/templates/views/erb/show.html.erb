@@ -1,5 +1,11 @@
 <%% title "<%= singular_name.titleize %>" %>
 
+<%- if action? :index -%>
+<ol class="actions">
+  <li><%%= link_to "View All", <%= plural_name %>_path %></li>
+</ol>
+<%- end -%>
+
 <%- for attribute in attributes -%>
 <p>
   <strong><%= attribute.column.human_name.titleize %>:</strong>
@@ -7,14 +13,8 @@
 </p>
 <%- end -%>
 
-<p>
 <%- if action? :edit -%>
-  <%%= link_to "Edit", edit_<%= singular_name %>_path(@<%= singular_name %>) %> |
+<ol class="actions">
+  <li><%%= link_to "Edit", edit_<%= singular_name %>_path(@<%= singular_name %>) %></li>
+</ol>
 <%- end -%>
-<%- if action? :destroy -%>
-  <%%= link_to "Destroy", @<%= singular_name %>, :confirm => 'Are you sure?', :method => :delete %> |
-<%- end -%>
-<%- if action? :index -%>
-  <%%= link_to "View All", <%= plural_name %>_path %>
-<%- end -%>
-</p>
