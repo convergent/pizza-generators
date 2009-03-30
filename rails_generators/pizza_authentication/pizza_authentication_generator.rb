@@ -1,5 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "../../lib/insert_commands.rb")
 class PizzaAuthenticationGenerator < Rails::Generator::Base
+  include PizzaGenerators
   attr_accessor :user_name, :user_session_name
 
   def initialize(runtime_args, runtime_options = {})
@@ -34,7 +34,7 @@ class PizzaAuthenticationGenerator < Rails::Generator::Base
       m.migration_template "migration.rb", "db/migrate", :migration_file_name => "create_#{user_plural_name}"
 
       m.route_resources user_plural_name
-      m.route_resources user_session_plural_name
+      m.route_resource user_session_singular_name
       m.route_name :login, 'login', :controller => user_session_plural_name, :action => 'new'
       m.route_name :logout, 'logout', :controller => user_session_plural_name, :action => 'destroy'
       m.route_name :signup, 'signup', :controller => user_plural_name, :action => 'new'
