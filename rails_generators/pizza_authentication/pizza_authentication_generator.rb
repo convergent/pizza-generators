@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + "/lib/insert_commands.rb")
+require File.expand_path(File.dirname(__FILE__) + "../../lib/insert_commands.rb")
 class PizzaAuthenticationGenerator < Rails::Generator::Base
   attr_accessor :user_name, :user_session_name
 
