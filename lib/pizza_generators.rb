@@ -14,7 +14,6 @@ module PizzaGenerators
 
     def route_name(name, path, route_options = {})
       sentinel = 'ActionController::Routing::Routes.draw do |map|'
-
       logger.route "map.#{name} '#{path}', :controller => '#{route_options[:controller]}', :action => '#{route_options[:action]}'"
       unless options[:pretend]
         gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel)})/mi do |match|
