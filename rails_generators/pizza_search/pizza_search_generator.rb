@@ -29,7 +29,8 @@ class PizzaSearchGenerator < Rails::Generator::Base
   
   def manifest
     record do |m|
-      m.template "_search_form.html.haml", "app/views/#{plural_name}/_search_form.html.haml"
+      m.template "_search_form.html.haml", "app/views/#{plural_name}/_search.html.haml"
+      
     end
   end
   
@@ -44,15 +45,21 @@ class PizzaSearchGenerator < Rails::Generator::Base
   def produce_field(attribute)
     case attribute.type
     when :string 
-      "    =#{plural_name}.label :#{attribute.name}_contains, t(:#{attribute.name}_contains)\n    =#{plural_name}.text_field :#{attribute.name}_contains\n"
+      "    =#{plural_name}.label :#{attribute.name}_contains, t(:#{attribute.name})\n    =#{plural_name}.text_field :#{attribute.name}_contains\n"
     when :boolean
-      "    =#{plural_name}.label :#{attribute.name}\n    =#{plural_name}.check_box :#{attribute.name}\n"
+      "    =#{plural_name}.label :#{attribute.name}, t(:#{attribute.name})\n    =#{plural_name}.check_box :#{attribute.name}\n"
     when :integer
       "    =#{plural_name}.label :#{attribute.name}_gt, t(:#{attribute.name}_gt)\n           =#{plural_name}.text_field :#{attribute.name}\n"
       "    =#{plural_name}.label :#{attribute.name}_lt, t(:#{attribute.name}_lt)\n    =#{plural_name}.text_field :#{attribute.name}\n"
     when :datetime || :date
-      "    =#{plural_name}.label :#{attribute.name}_after, t(:#{attribute.name}_after)\n    =#{plural_name}.date_select :#{attribute.name}_after\n"
+      date_name = attribute.name.gsub(/(_at|_on)$/,"")
+      "    =#{plural_name}.label :#{date_name}_after, t(:#{date_name}_after)\n    =#{plural_name}.date_select :#{date_name}_after\n"
     end
+  end
+  
+  # is there a better way to do this? Perhaps with const_defined?
+  def model_exists?
+    File.exist? destination_path("app/models/#{singular_name}.rb")
   end
   
   def model_columns_for_attributes
